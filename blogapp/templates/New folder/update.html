@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} Edit Blog Post {% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+	{% if user.id == post.author.id %}
+		<h1> Update Post... </h1>
+		<center>
+		<h2> {{ post.title }} <h2>
+		<form method="POST">
+		{% csrf_token %}
+			<table>
+				
+				{{ fm.as_table }}
+			</table>
+			<br>
+			<input type="hidden" name="author" value="{{user.id}}" id="author1" required>
+			<input type="submit" value="Update" class="btn btn-update">
+	
+		</form>
+		</center>
+	{% else %}
+		<h3> This must be your post to Edit.</h3>
+	{% endif %}
+<script>
+	var id = "{{ user.id }}";
+	document.getElementById("author1").value = id;
+
+	{% if user.first_name %}
+		var name = "{{user.first_name}} {{user.last_name}}";
+	{% else %}
+		var name = "{{user.username}}";
+	{% endif %}
+	document.getElementById("author2").value = name;
+</script>		
+{% else %}
+<h3> You should be logined to an account for editing...</h3>
+{% endif %}
+
+{% endblock %}

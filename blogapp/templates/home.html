@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %} 
+	<main class="" style="">
+		<div class="container" style="margin-top: 3.6rem !important;">
+			<div class="row">
+				<div class="col-md-8">
+					{% for post in posts %} 
+						<div class="d-flex align-items-center glass-light p-3 my-3">
+							<div class="flex-shrink-0">
+								<img class="rounded shadow" width="80" height="80" src="/static/media/company.jpg" alt="...">
+							</div>
+							<div class="flex-grow-1 ms-3">
+								<h3 class="h3 pe-3"><em><a href="{% url 'blogpage' post.pk %}">{{ post.title }}</a></em></h3> 
+								<hr class="my-1">
+								<div class="d-flex align-items-center">
+									<p class="mb-0"> {{ post.body|safe|slice:"100" }} ...
+									<small class="text-muted">- {{ post.post_updated|date:"d M, Y" }}.</small></p>
+								</div>
+								<a class="mt-0" href="{% url 'blogpage' post.pk %}"><strong><small>Read More ></small></strong></a>
+								{% if user.is_authenticated %}
+									{% if user.id == post.author.id %}
+										<a class="btn btn-sm btn-secondary" href="{% url 'update' post.pk %}"><i class="bi bi-pencil-square"></i> Update</a>
+										<a class="btn btn-sm btn-danger" href="{% url 'deletepost' post.pk %}" onclick ="return confirm('Are you sure??')"><i class="bi bi-trash"></i> Delete</a>
+									{% endif %}
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %} 
+				</div>
+				<div class="col-md-4 d-none d-md-block">
+					<div class="position-sticky">
+						<div class="glass-light mb-3 p-2" style="border-radius: 0rem !important;">
+							<form class="form-search d-flex">
+								<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+								<button class="btn btn-secondary" type="submit"><i class="bi bi-search text-white"></i></button>
+							</form>
+						</div>
+						<div class="mb-3 p-3 glass-light rounded shadow">
+							<h5 class="h5 text-white"><em><u>Categories</u></em></h5>
+							<ol class="list-unstyled mb-0">
+								<li><a href="">Uncategorised</a></li>
+								<li><a href="">Nature</a></li>
+								<li><a href="">Technology</a></li>
+								<li><a href="">Science</a></li>
+								<li><a href="">Food</a></li>
+								<li><a href="">Travel</a></li>
+							</ol>
+						</div>
+
+						<footer class="text-white-50">
+							<small><em>&#169; 2021 All Rights Reserved. | Made by <a href="">Akshata Magar</a>.</em></small>
+						</footer>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock content %} 

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %} Home Page {% endblock %}
+
+{% block content %}
+<h2> Welcome {{ user.username }} </h2>
+
+{% for post in posts %}
+<ul>
+	<li><a href="{% url 'blogpage' post.pk %}">
+		{{ post.title }}</a> - 
+		{% if post.author.first_name %}
+			{{ post.author.first_name }} {{ post.author.last_name }} -
+			
+	    	{% else %}
+	    		{{ post.author }} 
+	    	{% endif %}
+		{{ post.post_updated }}
+ 		<small>
+		{% if user.is_authenticated %}
+			{% if user.id == post.author.id %}
+					
+				<a href="{% url 'update' post.pk %}">(Edit)</a>							
+				<a href="{% url 'deletepost' post.pk %}" onclick ="return confirm('Are you sure??')">				(Delete)</a>
+			{% endif %}
+			
+		{% endif %}
+		</small> </br>
+
+		{{ post.body|safe|slice:"170" }} <a href="{% url 'update' post.pk %}">(Read More...)</a>
+	</li>
+
+</ul>
+{% endfor %}
+
+{% endblock %}
