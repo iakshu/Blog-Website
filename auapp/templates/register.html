@@ -1,0 +1,62 @@
+{% extends "base_accounts_template.html" %}
+{% load static %}
+{% block pageTitle %} Register | Blog {% endblock pageTitle %}
+
+
+{% block bodyContent %}
+<main class="">
+  <section class="container-fluid">
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 p-3 glass">
+      <div class="container">
+        <!-- Pills navs -->
+        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+          <li class="nav-item" href="{% url 'user_login' %}" role="presentation">
+            <a class="nav-link bg-gray" href="{% url 'user_login' %}" id="tab-login">Login</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="tab-register">Register</a>
+          </li>
+        </ul>
+
+        <!-- Register Form -->
+        <form class="" method="POST" novalidate>
+          {% csrf_token %}
+
+          <!-- Email Input -->
+          <div class="col-12 mb-3">
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="inputGroupPrepend"><i class="fas fa-at"></i></span>
+              <input type="email" class="form-control" id="email" name="email" aria-describedby="inputGroupPrepend" placeholder="Enter Email" {% if form.is_bound %} value="{{ form.email.value }}" {% endif %} required>
+            </div>
+              {% if msg %}
+                <div class="text-danger ps-1 my-1"> {{msg}} </div>
+              {% endif %}
+          </div>
+
+          <!-- Checkbox -->
+          <div class="form-check d-flex justify-content-center mb-4">
+            <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText">
+            <label class="form-check-label" for="registerCheck">
+               <p class="ml-2 mb-1 text-muted">I have read and agree to the <a href="#">terms</a>.</p>
+            </label>
+          </div>
+
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+    </div>
+  </section>
+
+  <!-- {{form.as_p}} -->
+</main>
+
+
+{% endblock bodyContent %}

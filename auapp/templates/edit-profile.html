@@ -1,0 +1,92 @@
+{% extends "base_accounts_template.html" %}
+{% load static %}
+{% block pageTitle %} Edit Profile | Blog {% endblock pageTitle %}
+
+{% block bodyContent %}
+<style type="text/css">
+  body{
+    background-color: #23242B !important;
+  }
+</style>
+<main class="">
+	<section class="">
+		<div class="container my-5 p-3 glass">
+			<div class="row">
+
+				{# List group #}
+				<div class="col-4 d-none d-md-block">
+					<ul class="list-group">
+						<li class="list-group-item active">Edit Profile</li>
+						<a href="{% url 'password_change' %}"><li class="list-group-item">Change Password</li></a>
+						{# <li class="list-group-item"></li> #}
+					</ul>
+				</div>
+
+				{# Content  #}
+				<div class="col-sm-12 col-md-8">
+				{# Tab panes #}
+					<div class="glass p-3 text-white">
+						<article class="">
+							{% if confirm %}
+								<div class="alert alert-success" role="alert">
+									Your Profile has been updated!
+								</div>
+							{% endif %}
+							<form class="row g-3" method="POST" role="presentation" novalidate>
+								{% csrf_token %}
+								{# Info #}
+								<div class="col-12">
+									<div class="d-flex justify-content-between align-items-center">
+										{# Name, Username #}
+										<div class="ml-3 mt-2">
+											<h5 class="mb-0 ml-1">{{profile.first_name}} {{profile.last_name}} <small class="text-sm">@<em> {{profile.username}}</em></small></h5>
+										</div>
+									</div>
+								</div>
+
+								{# First Name #}
+								<div class="col-md-12">
+									<label for="first_name" class="form-label mb-2">First name</label>
+									<div class="input-group has-validation">
+										<span class="input-group-text" id="first_name"><i class="fas fa-user-secret"></i></span>
+										<input type="text" name="first_name"  class="form-control" id="first_name" aria-describedby="first_name" placeholder="First Name" value="{{ form.first_name.value }}"required>
+									</div>
+									{% for err in form.first_name.errors %}<div class="mb-1 text-danger"><small> {{err}} </small></div>{% endfor %}
+								</div>
+
+								{# Last name #}
+								<div class="col-md-12">
+									<label for="last_name" class="form-label mb-2">Last name</label>
+									<div class="input-group has-validation">
+										<span class="input-group-text" id="last_name"><i class="fas fa-user-secret"></i></span>
+										<input type="text" name="last_name"  class="form-control" id="last_name" aria-describedby="last_name" placeholder="Last Name" value="{{ form.last_name.value }}" required>
+									</div>
+									{% for err in form.last_name.errors %}<div class="mb-1 text-danger"><small> {{err}} </small></div>{% endfor %}
+								</div>
+								
+								{# Username #}
+								<div class="col-md-12">
+									<label for="username" class="form-label mb-2">Username</label>
+									<div class="input-group has-validation">
+										<span class="input-group-text" id="username"><i class="fas fa-at"></i></span>
+										<input type="text" name="username"  class="form-control" id="username" aria-describedby="username" placeholder="Username" value="{{ form.username.value }}" required>
+									</div>
+									{% for err in form.username.errors %}<div class=" text-danger"><small> {{err}} </small></div>{% endfor %}
+								</div>
+	
+								{# Submit Btn #}
+								<div class="">
+									<button type="submit" class="btn btn-info"><i class="fas fa-check mr-2"></i> Update</button>
+								</div>
+							</form>
+
+						</article>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+{% endblock bodyContent %}
+

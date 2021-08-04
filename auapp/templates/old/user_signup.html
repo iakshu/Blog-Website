@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Sign Up Page {% endblock %}
+
+{% block content %}
+<center>
+<h1> Sign Up </h1>
+
+<form method="POST">
+{% csrf_token %}
+
+<input type="email" name="un" placeholder="enter email" required>
+<br><br>
+
+<input type="submit" value="Sign Up">
+
+</form>
+</center>
+<h2> Note:password would sent to email </h2>
+{{ msg }}
+
+{% endblock %}
